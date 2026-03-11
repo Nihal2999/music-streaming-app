@@ -27,24 +27,6 @@ YOUTUBE_VIDEOS_URL = "https://www.googleapis.com/youtube/v3/videos"
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# # ── Copy cookies to writable /tmp on Render (secret files are read-only) ───────
-# _RENDER_COOKIES = "/etc/secrets/cookies.txt"
-# _TMP_COOKIES    = "/tmp/cookies.txt"
-# _LOCAL_COOKIES  = "cookies.txt"
-
-# if os.path.exists(_RENDER_COOKIES):
-#     shutil.copy(_RENDER_COOKIES, _TMP_COOKIES)
-#     COOKIES_PATH = _TMP_COOKIES
-# elif os.getenv("COOKIES_CONTENT"):
-#     with open(_TMP_COOKIES, "w") as f:
-#         f.write(os.getenv("COOKIES_CONTENT"))
-#     COOKIES_PATH = _TMP_COOKIES
-#     logger.info("Cookies written from environment variable")
-# elif os.path.exists(_LOCAL_COOKIES):
-#     COOKIES_PATH = _LOCAL_COOKIES
-# else:
-#     COOKIES_PATH = None
-
 # ── FastAPI App ────────────────────────────────────────────────────────────────
 app = FastAPI(
     title="Music Streaming API",
