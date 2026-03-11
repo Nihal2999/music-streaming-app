@@ -35,13 +35,15 @@ _LOCAL_COOKIES  = "cookies.txt"
 if os.path.exists(_RENDER_COOKIES):
     shutil.copy(_RENDER_COOKIES, _TMP_COOKIES)
     COOKIES_PATH = _TMP_COOKIES
-    logger.info("Cookies copied from /etc/secrets to /tmp")
+elif os.getenv("COOKIES_CONTENT"):
+    with open(_TMP_COOKIES, "w") as f:
+        f.write(os.getenv("COOKIES_CONTENT"))
+    COOKIES_PATH = _TMP_COOKIES
+    logger.info("Cookies written from environment variable")
 elif os.path.exists(_LOCAL_COOKIES):
     COOKIES_PATH = _LOCAL_COOKIES
-    logger.info("Using local cookies.txt")
 else:
     COOKIES_PATH = None
-    logger.warning("No cookies.txt found")
 
 # ── FastAPI App ────────────────────────────────────────────────────────────────
 app = FastAPI(
