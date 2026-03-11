@@ -368,25 +368,12 @@ async def get_stream_url(video_id: str):
     Note: These URLs expire after a few hours — always fetch fresh before playing.
     """
     ydl_opts = {
-        "format": "bestaudio[ext=webm]/bestaudio[ext=m4a]/bestaudio/best",
+        "format": "best",
         "quiet": True,
         "no_warnings": True,
         "noplaylist": True,
         "extract_flat": False,
         "cookiefile": COOKIES_PATH,
-        # "cookiefile": "/etc/secrets/cookies.txt" if os.path.exists("/etc/secrets/cookies.txt") else None,
-        # "check_formats": False,
-        # "cookiefile": "/etc/secrets/cookies.txt" if os.path.exists("/etc/secrets/cookies.txt") else "cookies.txt",
-        # "nocheckcertificate": True,
-        # "geo_bypass": True,
-        # "extractor_args": {
-        #     "youtube": {
-        #         "player_client": ["tv_embedded", "android_vr"],
-        #     }
-        # },
-        # "http_headers": {
-        #     "User-Agent": "com.google.ios.youtube/19.29.1 (iPhone16,2; U; CPU iOS 17_5_1 like Mac OS X;)",
-        # },
     }
 
     url = f"https://www.youtube.com/watch?v={video_id}"
@@ -431,22 +418,17 @@ async def proxy_audio(video_id: str, request: Request):
     Supports HTTP Range requests so the browser can seek in the audio.
     """
     ydl_opts = {
-        "format": "18/140/139/bestaudio/best",
+        "format": "best",
         "quiet": True,
         "no_warnings": True,
         "noplaylist": True,
         "check_formats": False,
         "cookiefile": COOKIES_PATH,
-        # "cookiefile": "/etc/secrets/cookies.txt" if os.path.exists("/etc/secrets/cookies.txt") else None,
-        # "cookiefile": "/etc/secrets/cookies.txt" if os.path.exists("/etc/secrets/cookies.txt") else "cookies.txt",
         "extractor_args": {
             "youtube": {
                 "player_client": ["tv_embedded", "android_vr"],
             }
         },
-        # "http_headers": {
-        #     "User-Agent": "com.google.ios.youtube/19.29.1 (iPhone16,2; U; CPU iOS 17_5_1 like Mac OS X;)",
-        # },
     }
 
     url = f"https://www.youtube.com/watch?v={video_id}"
