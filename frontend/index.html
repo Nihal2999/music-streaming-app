@@ -246,6 +246,7 @@
     .hero {
       padding: 10px 0 20px;
       position: relative;
+      z-index: 10;
     }
 
     .hero-eyebrow {
@@ -1135,10 +1136,10 @@
     .search-outer { position: relative; flex: 1; }
 
     .suggestions-dropdown {
-      position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+      position: absolute; top: calc(100% + 6px); left: -56px; right: -6px;
       background: var(--bg2); border: 1px solid var(--border2);
-      border-radius: 14px; z-index: 500;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+      border-radius: 14px; z-index: 600;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.45);
       overflow: hidden;
       animation: dropIn 0.18s cubic-bezier(0.22,1,0.36,1);
       display: none;
@@ -1516,8 +1517,8 @@
   // ── BACKEND URL ──────────────────────────────────────────────────────────
   // For local dev:  http://localhost:8000
   // For production: update this to your Render URL after deploying
-  <!-- const BACKEND_URL = window.BACKEND_URL || 'http://localhost:8000'; -->
-  const BACKEND_URL = window.BACKEND_URL || 'https://wavely-api-w4vl.onrender.com';
+  const BACKEND_URL = window.BACKEND_URL || 'http://localhost:8000';
+  <!-- const BACKEND_URL = window.BACKEND_URL || 'https://wavely-api-w4vl.onrender.com'; -->
   const MAX_RECENT  = 20;
   const MAX_FAVS    = 100;
 

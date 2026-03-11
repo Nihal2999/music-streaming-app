@@ -351,12 +351,20 @@ async def get_stream_url(video_id: str):
     Note: These URLs expire after a few hours — always fetch fresh before playing.
     """
     ydl_opts = {
-        # Request the best audio-only format (webm/m4a/mp4 audio)
-        "format": "bestaudio[ext=webm]/bestaudio[ext=m4a]/bestaudio/best",
-        "quiet": True,            # suppress console output
+        "format": "18/140/bestaudio/best",
+        "quiet": True,
         "no_warnings": True,
-        "noplaylist": True,       # don't follow playlist links
-        "extract_flat": False,
+        "noplaylist": True,
+        "check_formats": False,
+        "cookiefile": "/etc/secrets/cookies.txt",
+        "extractor_args": {
+            "youtube": {
+                "player_client": ["ios", "tv_embedded"],
+            }
+        },
+        "http_headers": {
+            "User-Agent": "com.google.ios.youtube/19.29.1 (iPhone16,2; U; CPU iOS 17_5_1 like Mac OS X;)",
+        },
     }
 
     url = f"https://www.youtube.com/watch?v={video_id}"
@@ -401,15 +409,19 @@ async def proxy_audio(video_id: str, request: Request):
     Supports HTTP Range requests so the browser can seek in the audio.
     """
     ydl_opts = {
-        "format": "18/140/139/bestaudio/best",
+        "format": "18/140/bestaudio/best",
         "quiet": True,
         "no_warnings": True,
         "noplaylist": True,
         "check_formats": False,
+        "cookiefile": "/etc/secrets/cookies.txt",
         "extractor_args": {
             "youtube": {
-                "player_client": ["tv_embedded", "android_vr"],
+                "player_client": ["ios", "tv_embedded"],
             }
+        },
+        "http_headers": {
+            "User-Agent": "com.google.ios.youtube/19.29.1 (iPhone16,2; U; CPU iOS 17_5_1 like Mac OS X;)",
         },
     }
 
