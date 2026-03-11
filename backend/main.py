@@ -368,11 +368,10 @@ async def get_stream_url(video_id: str):
     Note: These URLs expire after a few hours — always fetch fresh before playing.
     """
     ydl_opts = {
-        "format": "140/bestaudio[ext=m4a]/bestaudio[ext=webm]/bestaudio/best[ext=mp4]/best",
+        "format": "140/251/250/249/18/22/bestaudio/best",
         "quiet": True,
         "no_warnings": True,
         "noplaylist": True,
-        "extract_flat": False,
         "cookiefile": COOKIES_PATH,
     }
 
@@ -418,17 +417,11 @@ async def proxy_audio(video_id: str, request: Request):
     Supports HTTP Range requests so the browser can seek in the audio.
     """
     ydl_opts = {
-        "format": "140/bestaudio[ext=m4a]/bestaudio[ext=webm]/bestaudio/best[ext=mp4]/best",
+        "format": "140/251/250/249/18/22/bestaudio/best",
         "quiet": True,
         "no_warnings": True,
         "noplaylist": True,
-        "check_formats": False,
         "cookiefile": COOKIES_PATH,
-        "extractor_args": {
-            "youtube": {
-                "player_client": ["tv_embedded", "android_vr"],
-            }
-        },
     }
 
     url = f"https://www.youtube.com/watch?v={video_id}"
