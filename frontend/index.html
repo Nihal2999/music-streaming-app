@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Wavely — Music Streaming</title>
-  <meta name="description" content="Free music streaming powered by YouTube." />
+  <meta name="description" content="Free music streaming." />
   <meta name="theme-color" content="#080810" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -12,6 +12,7 @@
   <meta name="apple-mobile-web-app-title" content="Wavely" />
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="icon" type="image/png" href="icons/streaming.png">
 
   <!-- Clash Display + Cabinet Grotesk — distinctive, editorial feel -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1299,7 +1300,7 @@
   <section class="hero reveal">
     <div class="hero-eyebrow"><span></span>Free Music Streaming</div>
     <h1 class="hero-title">The music you love,<br/><span class="grad">always playing.</span></h1>
-    <p class="hero-sub">Powered by YouTube · No account needed · Works offline</p>
+    <p class="hero-sub">Built by Nihal👨🏽‍💻 · enjoy adds free music🎼</p>
 
     <div class="search-wrap" id="search-wrap-el">
       <span class="s-icon">🔍</span>
@@ -1311,13 +1312,13 @@
     </div>
 
     <div class="genres">
-      <span class="genre-chip" data-q="top hits 2024">🔥 Top Hits</span>
+      <span class="genre-chip" data-q="top hits 2026">🔥 Top Hits</span>
       <span class="genre-chip" data-q="lo-fi chill beats">🌙 Lo-fi</span>
-      <span class="genre-chip" data-q="hip hop rap 2024">🎤 Hip-Hop</span>
-      <span class="genre-chip" data-q="bollywood songs 2024">🇮🇳 Bollywood</span>
+      <span class="genre-chip" data-q="hip hop rap 2026">🎤 Hip-Hop</span>
+      <span class="genre-chip" data-q="bollywood songs 2026">🇮🇳 Bollywood</span>
       <span class="genre-chip" data-q="edm electronic dance">⚡ EDM</span>
       <span class="genre-chip" data-q="classical piano">🎹 Classical</span>
-      <span class="genre-chip" data-q="pop songs 2024">🎶 Pop</span>
+      <span class="genre-chip" data-q="pop songs 2026">🎶 Pop</span>
       <span class="genre-chip" data-q="jazz relaxing">🎷 Jazz</span>
     </div>
   </section>
@@ -1515,7 +1516,8 @@
   // ── BACKEND URL ──────────────────────────────────────────────────────────
   // For local dev:  http://localhost:8000
   // For production: update this to your Render URL after deploying
-  const BACKEND_URL = window.BACKEND_URL || 'https://YOUR-APP.onrender.com';
+  <!-- const BACKEND_URL = window.BACKEND_URL || 'http://localhost:8000'; -->
+  const BACKEND_URL = window.BACKEND_URL || 'https://wavely-api-w4vl.onrender.com';
   const MAX_RECENT  = 20;
   const MAX_FAVS    = 100;
 
@@ -1789,10 +1791,10 @@
 
   // ── DISCOVER ──────────────────────────────────────────────────────────────
   const DISCOVER_ROWS = [
-    { title: '🔥 Trending Now',    subtitle: 'Most played globally',  query: 'top hits 2024' },
+    { title: '🔥 Trending Now',    subtitle: 'Most played globally',  query: 'top hits 2026' },
     { title: '🌙 Chill & Lo-fi',   subtitle: 'Focus, relax, unwind',  query: 'lofi chill study beats' },
-    { title: '🇮🇳 Bollywood Hits',  subtitle: 'Desi bangers',          query: 'bollywood hit songs 2024' },
-    { title: '⚡ EDM Anthems',      subtitle: 'Energy mode on',        query: 'edm electronic dance 2024' },
+    { title: '🇮🇳 Bollywood Hits',  subtitle: 'Desi bangers',          query: 'bollywood hit songs 2026' },
+    { title: '⚡ EDM Anthems',      subtitle: 'Energy mode on',        query: 'edm electronic dance 2026' },
   ];
   const discoverCache = {};
 
