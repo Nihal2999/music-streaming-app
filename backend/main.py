@@ -368,7 +368,7 @@ async def get_stream_url(video_id: str):
     Note: These URLs expire after a few hours — always fetch fresh before playing.
     """
     ydl_opts = {
-        "format": "best",
+        "format": "140/bestaudio[ext=m4a]/bestaudio[ext=webm]/bestaudio/best[ext=mp4]/best",
         "quiet": True,
         "no_warnings": True,
         "noplaylist": True,
@@ -418,7 +418,7 @@ async def proxy_audio(video_id: str, request: Request):
     Supports HTTP Range requests so the browser can seek in the audio.
     """
     ydl_opts = {
-        "format": "best",
+        "format": "140/bestaudio[ext=m4a]/bestaudio[ext=webm]/bestaudio/best[ext=mp4]/best",
         "quiet": True,
         "no_warnings": True,
         "noplaylist": True,
