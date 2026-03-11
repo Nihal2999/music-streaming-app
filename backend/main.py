@@ -27,23 +27,23 @@ YOUTUBE_VIDEOS_URL = "https://www.googleapis.com/youtube/v3/videos"
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# ── Copy cookies to writable /tmp on Render (secret files are read-only) ───────
-_RENDER_COOKIES = "/etc/secrets/cookies.txt"
-_TMP_COOKIES    = "/tmp/cookies.txt"
-_LOCAL_COOKIES  = "cookies.txt"
+# # ── Copy cookies to writable /tmp on Render (secret files are read-only) ───────
+# _RENDER_COOKIES = "/etc/secrets/cookies.txt"
+# _TMP_COOKIES    = "/tmp/cookies.txt"
+# _LOCAL_COOKIES  = "cookies.txt"
 
-if os.path.exists(_RENDER_COOKIES):
-    shutil.copy(_RENDER_COOKIES, _TMP_COOKIES)
-    COOKIES_PATH = _TMP_COOKIES
-elif os.getenv("COOKIES_CONTENT"):
-    with open(_TMP_COOKIES, "w") as f:
-        f.write(os.getenv("COOKIES_CONTENT"))
-    COOKIES_PATH = _TMP_COOKIES
-    logger.info("Cookies written from environment variable")
-elif os.path.exists(_LOCAL_COOKIES):
-    COOKIES_PATH = _LOCAL_COOKIES
-else:
-    COOKIES_PATH = None
+# if os.path.exists(_RENDER_COOKIES):
+#     shutil.copy(_RENDER_COOKIES, _TMP_COOKIES)
+#     COOKIES_PATH = _TMP_COOKIES
+# elif os.getenv("COOKIES_CONTENT"):
+#     with open(_TMP_COOKIES, "w") as f:
+#         f.write(os.getenv("COOKIES_CONTENT"))
+#     COOKIES_PATH = _TMP_COOKIES
+#     logger.info("Cookies written from environment variable")
+# elif os.path.exists(_LOCAL_COOKIES):
+#     COOKIES_PATH = _LOCAL_COOKIES
+# else:
+#     COOKIES_PATH = None
 
 # ── FastAPI App ────────────────────────────────────────────────────────────────
 app = FastAPI(
@@ -370,11 +370,12 @@ async def get_stream_url(video_id: str):
     Note: These URLs expire after a few hours — always fetch fresh before playing.
     """
     ydl_opts = {
-        "format": "140/251/250/249/18/22/bestaudio/best",
+        "format": "bestaudio[ext=webm]/bestaudio[ext=m4a]/bestaudio/best",
         "quiet": True,
         "no_warnings": True,
         "noplaylist": True,
-        "cookiefile": COOKIES_PATH,
+        "extract_flat": False,
+        # "cookiefile": COOKIES_PATH,
     }
 
     url = f"https://www.youtube.com/watch?v={video_id}"
@@ -419,11 +420,17 @@ async def proxy_audio(video_id: str, request: Request):
     Supports HTTP Range requests so the browser can seek in the audio.
     """
     ydl_opts = {
-        "format": "140/251/250/249/18/22/bestaudio/best",
+        "format": "18/140/139/bestaudio/best",
         "quiet": True,
         "no_warnings": True,
         "noplaylist": True,
-        "cookiefile": COOKIES_PATH,
+        "check_formats": False,
+        # "cookiefile": COOKIES_PATH,
+        "extractor_args": {
+            "youtube": {
+                "player_client": ["tv_embedded", "android_vr"],
+            }
+        },
     }
 
     url = f"https://www.youtube.com/watch?v={video_id}"
