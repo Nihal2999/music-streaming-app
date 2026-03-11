@@ -36,7 +36,6 @@ music-streaming-app/
 ├── backend/
 │   ├── main.py            # FastAPI app — all API routes
 │   ├── requirements.txt   # Python dependencies
-│   ├── .env               # Your API key (never commit this)
 │   └── render.yaml        # Render deployment config
 │
 ├── frontend/
