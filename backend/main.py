@@ -5,6 +5,7 @@ Uses YouTube Data API for search/metadata and yt-dlp for audio streaming.
 """
 
 import os
+import shutil
 import logging
 from typing import Optional
 
@@ -25,6 +26,22 @@ YOUTUBE_VIDEOS_URL = "https://www.googleapis.com/youtube/v3/videos"
 # ── Logger ─────────────────────────────────────────────────────────────────────
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# ── Copy cookies to writable /tmp on Render (secret files are read-only) ───────
+_RENDER_COOKIES = "/etc/secrets/cookies.txt"
+_TMP_COOKIES    = "/tmp/cookies.txt"
+_LOCAL_COOKIES  = "cookies.txt"
+
+if os.path.exists(_RENDER_COOKIES):
+    shutil.copy(_RENDER_COOKIES, _TMP_COOKIES)
+    COOKIES_PATH = _TMP_COOKIES
+    logger.info("Cookies copied from /etc/secrets to /tmp")
+elif os.path.exists(_LOCAL_COOKIES):
+    COOKIES_PATH = _LOCAL_COOKIES
+    logger.info("Using local cookies.txt")
+else:
+    COOKIES_PATH = None
+    logger.warning("No cookies.txt found")
 
 # ── FastAPI App ────────────────────────────────────────────────────────────────
 app = FastAPI(
@@ -356,7 +373,8 @@ async def get_stream_url(video_id: str):
         "no_warnings": True,
         "noplaylist": True,
         "extract_flat": False,
-        "cookiefile": "/etc/secrets/cookies.txt" if os.path.exists("/etc/secrets/cookies.txt") else None,
+        "cookiefile": COOKIES_PATH,
+        # "cookiefile": "/etc/secrets/cookies.txt" if os.path.exists("/etc/secrets/cookies.txt") else None,
         # "check_formats": False,
         # "cookiefile": "/etc/secrets/cookies.txt" if os.path.exists("/etc/secrets/cookies.txt") else "cookies.txt",
         # "nocheckcertificate": True,
@@ -418,7 +436,8 @@ async def proxy_audio(video_id: str, request: Request):
         "no_warnings": True,
         "noplaylist": True,
         "check_formats": False,
-        "cookiefile": "/etc/secrets/cookies.txt" if os.path.exists("/etc/secrets/cookies.txt") else None,
+        "cookiefile": COOKIES_PATH,
+        # "cookiefile": "/etc/secrets/cookies.txt" if os.path.exists("/etc/secrets/cookies.txt") else None,
         # "cookiefile": "/etc/secrets/cookies.txt" if os.path.exists("/etc/secrets/cookies.txt") else "cookies.txt",
         "extractor_args": {
             "youtube": {
