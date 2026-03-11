@@ -351,20 +351,24 @@ async def get_stream_url(video_id: str):
     Note: These URLs expire after a few hours — always fetch fresh before playing.
     """
     ydl_opts = {
-        "format": "18/140/bestaudio/best",
+        "format": "bestaudio[ext=webm]/bestaudio[ext=m4a]/bestaudio/best",
         "quiet": True,
         "no_warnings": True,
         "noplaylist": True,
-        "check_formats": False,
-        "cookiefile": "/etc/secrets/cookies.txt",
-        "extractor_args": {
-            "youtube": {
-                "player_client": ["ios", "tv_embedded"],
-            }
-        },
-        "http_headers": {
-            "User-Agent": "com.google.ios.youtube/19.29.1 (iPhone16,2; U; CPU iOS 17_5_1 like Mac OS X;)",
-        },
+        "extract_flat": False,
+        "cookiefile": "/etc/secrets/cookies.txt" if os.path.exists("/etc/secrets/cookies.txt") else None,
+        # "check_formats": False,
+        # "cookiefile": "/etc/secrets/cookies.txt" if os.path.exists("/etc/secrets/cookies.txt") else "cookies.txt",
+        # "nocheckcertificate": True,
+        # "geo_bypass": True,
+        # "extractor_args": {
+        #     "youtube": {
+        #         "player_client": ["tv_embedded", "android_vr"],
+        #     }
+        # },
+        # "http_headers": {
+        #     "User-Agent": "com.google.ios.youtube/19.29.1 (iPhone16,2; U; CPU iOS 17_5_1 like Mac OS X;)",
+        # },
     }
 
     url = f"https://www.youtube.com/watch?v={video_id}"
@@ -409,20 +413,21 @@ async def proxy_audio(video_id: str, request: Request):
     Supports HTTP Range requests so the browser can seek in the audio.
     """
     ydl_opts = {
-        "format": "18/140/bestaudio/best",
+        "format": "18/140/139/bestaudio/best",
         "quiet": True,
         "no_warnings": True,
         "noplaylist": True,
         "check_formats": False,
-        "cookiefile": "/etc/secrets/cookies.txt",
+        "cookiefile": "/etc/secrets/cookies.txt" if os.path.exists("/etc/secrets/cookies.txt") else None,
+        # "cookiefile": "/etc/secrets/cookies.txt" if os.path.exists("/etc/secrets/cookies.txt") else "cookies.txt",
         "extractor_args": {
             "youtube": {
-                "player_client": ["ios", "tv_embedded"],
+                "player_client": ["tv_embedded", "android_vr"],
             }
         },
-        "http_headers": {
-            "User-Agent": "com.google.ios.youtube/19.29.1 (iPhone16,2; U; CPU iOS 17_5_1 like Mac OS X;)",
-        },
+        # "http_headers": {
+        #     "User-Agent": "com.google.ios.youtube/19.29.1 (iPhone16,2; U; CPU iOS 17_5_1 like Mac OS X;)",
+        # },
     }
 
     url = f"https://www.youtube.com/watch?v={video_id}"
